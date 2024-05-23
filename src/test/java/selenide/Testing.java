@@ -3,6 +3,9 @@ package selenide;
 import java.time.Duration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 
+@Epic("TestingEpic")
 public class Testing {
 
     MainPage mainPage;
@@ -18,12 +22,13 @@ public class Testing {
     Booking booking;
 
     @BeforeEach
-    @Test
     public void test_settings() {
         Selenide.open("https://pobeda.aero");
     }
 
     @BeforeEach
+    @Feature("Проверка логотипа и заголовка страницы")
+    @Description(value = "Проверка логотипа и заголовка страницы")
     @Test
     public void test_checkTitleAndLogo() {
 
@@ -43,6 +48,8 @@ public class Testing {
         Assertions.assertEquals(pobedaImg.getAttribute("alt"), "«Авиакомпания «Победа», Группа «Аэрофлот»");
     }
 
+    @Feature("Проверка блока с информацией")
+    @Description(value = "Проверка блока с информацией")
     @Test
     public void test_findAndCheckInfo() {
 
@@ -69,6 +76,8 @@ public class Testing {
         Assertions.assertTrue(aboutCompany.isDisplayed());
     }
 
+    @Feature("Проверка поиска билетов")
+    @Description(value = "Проверка поиска билетов")
     @Test
     public void test_searchTickets() {
 
@@ -92,6 +101,8 @@ public class Testing {
         search.clickSearchButton();
     }
 
+    @Feature("Проверка бронирования")
+    @Description(value = "Проверка бронирования")
     @Test
     public void test_booking() {
 
@@ -130,10 +141,19 @@ public class Testing {
         Assertions.assertEquals(errorText.getAttribute("outerText"), "Заказ с указанными параметрами не найден");
     }
 
+    @Feature("Тест с ошибкой")
+    @Description(value = "Тест с ошибкой")
+    @Test
+    public void test_errorTest() {
+
+        String currentPageTitle = mainPage.getPageTitle();
+        Assertions.assertTrue(currentPageTitle.contains("Пикачу"));
+
+    }
+
     @AfterAll
     public static void test_closeBrowser() throws InterruptedException {
 
-        // Завершенеие работы браузера
         Thread.sleep(5000);
         Selenide.closeWebDriver();
     }
