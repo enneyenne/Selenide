@@ -60,7 +60,7 @@ public class Booking {
     @Step("Ввод фамилии {enterSurname}")
     public void setSurname(String enterSurname) {
         surname.hover();
-        ticketNumber.pressEnter();
+        surname.pressEnter();
         surname.setValue(enterSurname);
     }
 
